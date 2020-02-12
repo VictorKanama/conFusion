@@ -26,12 +26,13 @@ import { LeaderService } from "./services/leader.service";
 import { LoginComponent } from "./login/login.component";
 import {
   MatDialogModule,
-  MatCheckbox,
   MatInputModule,
   MatFormFieldModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSelectModule,
+  MatSlideToggleModule
 } from "@angular/material";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,9 @@ import { FormsModule } from "@angular/forms";
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     FlexLayoutModule,
     AppRoutingModule,
     MatToolbarModule,
