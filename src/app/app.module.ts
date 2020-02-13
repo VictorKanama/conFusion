@@ -35,6 +35,8 @@ import {
   MatSliderModule
 } from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { baseURL } from "./shared/baseurl";
 
 @NgModule({
   declarations: [
@@ -67,9 +69,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MatGridListModule,
     MatCardModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
-  providers: [DishService, PromotionService, LeaderService],
+  providers: [
+    DishService,
+    PromotionService,
+    LeaderService,
+    { provide: "BaseURL", useValue: baseURL }
+  ],
   entryComponents: [LoginComponent],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   createPlatformFactory,
-  ViewChild
+  ViewChild,
+  Inject
 } from "@angular/core";
 import { Dish } from "../shared/dish";
 import { Comment } from "../shared/comment";
@@ -47,7 +48,8 @@ export class DishdetailComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private location: Location,
-    private dishService: DishService
+    private dishService: DishService,
+    @Inject("BaseURL") private BaseURL
   ) {
     this.createForm();
   }
