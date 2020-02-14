@@ -24,6 +24,7 @@ export class DishdetailComponent implements OnInit {
   dishComments: Comment[];
   prev: string;
   next: string;
+  errMessage: string;
 
   @ViewChild("fform") commentFormDirective; // to ensure the form is reset to its initial value
 
@@ -62,12 +63,15 @@ export class DishdetailComponent implements OnInit {
       .pipe(
         switchMap((params: Params) => this.dishService.getDish(params["id"]))
       )
-      .subscribe(dish => {
-        this.dish = dish;
-        // console.log(dish.id);
-        this.setPrevNext(dish.id);
-        this.dishComments = dish.comments;
-      });
+      .subscribe(
+        dish => {
+          this.dish = dish;
+          // console.log(dish.id);
+          this.setPrevNext(dish.id);
+          this.dishComments = dish.comments;
+        },
+        errMessage => (this.errMessage = <any>errMessage)
+      );
   }
 
   setPrevNext(dishId: string) {
