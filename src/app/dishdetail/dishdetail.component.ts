@@ -21,10 +21,11 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 export class DishdetailComponent implements OnInit {
   dish: Dish;
   dishIds: string[];
-  dishComments: Comment[];
+  dishComments: Comment;
   prev: string;
   next: string;
   errMessage: string;
+  dishCopy: Dish;
 
   @ViewChild("fform") commentFormDirective; // to ensure the form is reset to its initial value
 
@@ -66,9 +67,9 @@ export class DishdetailComponent implements OnInit {
       .subscribe(
         dish => {
           this.dish = dish;
+          this.dishCopy = dish;
           // console.log(dish.id);
           this.setPrevNext(dish.id);
-          this.dishComments = dish.comments;
         },
         errMessage => (this.errMessage = <any>errMessage)
       );
@@ -90,8 +91,7 @@ export class DishdetailComponent implements OnInit {
     this.commentForm = this.fb.group({
       rating: 5,
       comment: ["", Validators.required],
-      author: ["", [Validators.required, Validators.minLength(2)]],
-      date: new Date().toISOString()
+      author: ["", [Validators.required, Validators.minLength(2)]]
     });
 
     this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -123,7 +123,22 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dishComments.push(this.commentForm.value);
+    this.dishComments = this.commentForm.value;
+    this.dishComments.date = new Date().toISOString();
+    this.dishCopy.comments.push(this.dishComments);
+
+    this.dishService.updateDish(this.dishCopy).subscribe(
+      dish => {
+        this.dish = dish;
+        this.dishCopy = dish;
+      },
+      errMessage => {
+        this.dish = null;
+        this.dishCopy = null;
+        this.errMessage = <any>errMessage;
+      }
+    );
+
     console.log(this.dishComments);
     this.commentFormDirective.resetForm();
     this.commentForm.reset({

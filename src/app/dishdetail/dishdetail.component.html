@@ -40,7 +40,7 @@
   <div fxFlex="40" *ngIf="dish" class="form-size">
     <mat-list>
       <h3>Comments</h3>
-      <mat-list-item *ngFor="let comments of dishComments">
+      <mat-list-item *ngFor="let comments of dish.comments">
         <p matLine>
           <span>{{ comments.comment }}</span>
         </p>
