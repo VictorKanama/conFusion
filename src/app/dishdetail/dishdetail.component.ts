@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  createPlatformFactory,
-  ViewChild,
-  Inject
-} from "@angular/core";
+import { Component, OnInit, ViewChild, Inject } from "@angular/core";
 import { Dish } from "../shared/dish";
 import { Comment } from "../shared/comment";
 import { Params, ActivatedRoute } from "@angular/router";

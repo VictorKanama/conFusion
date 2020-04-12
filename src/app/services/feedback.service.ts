@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Leader } from "../shared/leader";
 import { Observable } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { baseURL } from "../shared/baseurl";
 import { ProcessHTTPMsgService } from "./process-httpmsg.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Feedback } from "../shared/feedback";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,28 +15,15 @@ const httpOptions = {
 @Injectable({
   providedIn: "root"
 })
-export class LeaderService {
+export class FeedbackService {
   constructor(
     private http: HttpClient,
     private processHTTPMsgService: ProcessHTTPMsgService
   ) {}
 
-  getLeaders(): Observable<Leader[]> {
+  submitFeedback(feedback: Feedback): Observable<Feedback> {
     return this.http
-      .get<Leader[]>(baseURL + "leadership")
-      .pipe(catchError(this.processHTTPMsgService.handleError));
-  }
-
-  getLeader(id: string): Observable<Leader> {
-    return this.http
-      .get<Leader>(baseURL + "leadership/" + id)
-      .pipe(catchError(this.processHTTPMsgService.handleError));
-  }
-
-  getFeaturedLeader(): Observable<Leader> {
-    return this.http
-      .get<Leader>(baseURL + "leadership?featured=true")
-      .pipe(map(leaders => leaders[0]))
+      .post<Feedback>(baseURL + "feedback", feedback, httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }
